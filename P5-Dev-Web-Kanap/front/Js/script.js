@@ -43,25 +43,8 @@ function displayProducts(products) {
 
     console.log(newProduct);
 
-    // const itemsSection = ;
-    const items = document.querySelector("#items");
-    const itemsLink = document.createElement("a");
-    const eltP = document.createElement("p");
-
-    for (products in products) {
-        items.appendChild(itemsLink).classList.add("item__content");
-
-        // let links = document.querySelector("a.item__content");
-        // links.setAttribute("href", "#");
-        // links.innerHTML += colors;
-
-
-        // products.forEach( links => {
-        //     links = document.querySelector("a.item__content");
-        //     links.setAttribute("href", "#")
-
-        // });
-
-    }
-
+    const itemsSection = document.querySelector("#items");
+    const createAnchor = document.createElement("a");
+    itemsSection.appendChild(createAnchor).classList.add("item__content");
+    const itemLink = document.getElementsByClassName("items__content");
 }
