@@ -3,15 +3,12 @@
 fetch("http://localhost:3000/api/products/")
     // get promise
     .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
+        return res.json();
     })
     //promise OK : get promise's value
     .then(value => {
-        // console.log("API OK", value);
         for (var products of value) {
-            displayProducts(products)
+            displayProducts(products);
         };
     })
     // if error then :
@@ -23,37 +20,56 @@ fetch("http://localhost:3000/api/products/")
 
 // Création de de balises pour les produits
 
-/* for products.title -> create <p></p> ?*/
+const itemsSection = document.getElementById("items");
+const createArticle = document.createElement("article");
+const createh3Title = document.createElement("h3");
+createh3Title.classList.add("productName");
+const createImgTag = document.createElement("img");
+const createPTag = document.createElement("p");
+createPTag.classList.add("productDescription");
 
-const itemsSection = document.querySelector("#items");
-const createAnchor = document.createElement("a");
-const createText = document.createElement("p");
+
+// Fonction générant les produits trouvés dans l'API
 
 function displayProducts(products) {
-    // class produit {
-    //     constructor(colors, id, name, price, imageUrl, description, altTxt) {
-    //         this.colors = colors;
-    //         this.id = id;
-    //         this.name = name;
-    //         this.price = price;
-    //         this.imageUrl = imageUrl;
-    //         this.description = description;
-    //         this.altTxt = altTxt;
-    //     }
-    // }
 
-    // let newProduct = new produit(products.colors, products._id, products.name, products.price, products.imageUrl, products.description, products.altTxt);
-    console.log(products);
+    //URL en fonction de "URLSearchParam"
     
-    for (let article in products) {
-        console.log(article);
-        let link = itemsSection.appendChild(createAnchor);
-        link.appendChild(createText).innerText = 'Bonjour'
-    }
-    products.forEach(article => {
-        link.appendChild(createText).innerText += "Bonjour"
-    });
-    // itemsSection.appendChild(createAnchor).classList.add("item__content");
-    // const itemLink = document.getElementsByClassName("items__content");
+    itemsSection.innerHTML += `<a href='./product.html?id=${products._id}'></a>`;
 
+    let articleBody = document.querySelector("#items a").appendChild(createArticle);
+    articleBody.appendChild(createImgTag).src = `${products.imageUrl}`;
+    articleBody.appendChild(createImgTag).alt = `${products.altTxt}`;
+    articleBody.appendChild(createh3Title).innerText = `${products.name}`;
+    articleBody.appendChild(createPTag).innerText = `${products.description}`;
 }
+
+
+//Déclaration d'un objet
+// class kanap {
+//     constructor(colors, id, name, price, imageUrl, description, altTxt) {
+//         this.colors = colors;
+//         this.id = id;
+//         this.name = name;
+//         this.price = price;
+//         this.imageUrl = imageUrl;
+//         this.description = description;
+//         this.altTxt = altTxt;
+//     }
+
+//     printDescription() {
+//         console.log(`Description : ${this.description}`);
+//     }
+
+// myProducts() {
+
+// }
+
+    // let canapes = new kanap(products.colors, products.id, products.name, products.price, products.imageUrl, products.description, products.altTxt);
+
+    // canapes.printDescription();
+    // canapes.myProducts();
+
+
+    // console.log("produit : " + products);
+
