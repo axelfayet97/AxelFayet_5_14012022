@@ -4,15 +4,15 @@ fetch("http://localhost:3000/api/products/")
         // Récupération du résultat de la requête et conversion en objet json
         return res.json();
     })
-    .then(value => {
-        //Promesse acceptée, récupération de ses valeurs
-        for (var products of value) {
-            displayProducts(products);
+    .then(product => {
+        //Promesse acceptée, récupération de ses produits
+        for (var kanap of product) {
+            displayProducts(kanap);
         };
     })
     .catch(err => {
         // Si une erreur survient
-        console.log("Une erreur est survenue." + error);
+        console.log("Une erreur est survenue." + err);
     });
 
 // Fonction générant les produits trouvés dans l'API
