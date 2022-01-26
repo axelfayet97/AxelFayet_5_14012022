@@ -9,7 +9,7 @@ fetch(`http://localhost:3000/api/products/${productId}`)
         return res.json();
     })
     .then(product => {
-        //Promesse acceptée, récupération de ses produits
+        //Promesse acceptée, récupération de ses produits + Appel de la fonction les générant
         displayProducts(product);
     })
     .catch(err => {
@@ -19,6 +19,25 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 
 // Fonction générant les produits trouvés dans l'API
 function displayProducts(product) {
+    // Création et ajout de l'image du produit
+    const targetImg = document.querySelector(".item__img");
+    const createImgTag = document.createElement("img");
+    createImgTag.setAttribute("src", product.imageUrl);
+    createImgTag.setAttribute("alt", product.altTxt);
+    targetImg.appendChild(createImgTag);
+
+    // Ajout du titre de l'article
+    const assignTitle = document.getElementById("title");
+    assignTitle.textContent = product.name;
+
+    // Ajout du prix dans la balise span
+    const setPrice = document.getElementById("price");
+    setPrice.textContent = product.price;
+
+    // Ajout de la description dans la balise p
+    const assignDescription = document.getElementById("description");
+    assignDescription.textContent = product.description;
+
     // Ajout des options dans la balise select
     const targetSelect = document.getElementById("colors");
     const colorsArray = product.colors;
@@ -29,38 +48,11 @@ function displayProducts(product) {
         targetSelect.appendChild(color);
     }
 
-    // Reparamétrage de la valeur du champs input
+    // OPTIONNEL - Reparamétrage de la valeur du champs input
     document.getElementById("quantity").setAttribute("value", "1");
 
-    // Ajout de la description dans la balise p
-    const assignDescription = document.getElementById("description");
-    assignDescription.textContent = product.description;
-
-    // Ajout du prix dans la balise span
-    const setPrice = document.getElementById("price");
-    setPrice.textContent = product.price;
-
-    // Ajout du titre de l'article
-    const assignTitle = document.getElementById("title");
-    assignTitle.textContent = product.name;
-
-    // Création et ajout de l'image du produit
-    const targetImg = document.querySelector(".item__img");
-    const createImgTag = document.createElement("img");
-    createImgTag.setAttribute("src", product.imageUrl);
-    createImgTag.setAttribute("alt", product.altTxt);
-
-    // Récupération du conteneur    
-    const itemContainer = document.querySelector("section.item article");
-
-    // Attribution du contenu à la balise article
-    targetImg.appendChild(createImgTag);
-    itemContainer.appendChild(assignTitle);
-    itemContainer.appendChild(assignDescription);
-
-    // Changement nom titre de la page
+    // OPTIONNEL - Changement nom titre de la page
     document.title = product.name;
-
 }
 
 
@@ -89,7 +81,7 @@ buttonAdd.addEventListener("click", () => {
     //     alert("Veuillez sélectionner une couleur.");
     // } else {
 
-        
+
     // Ajout des données du produit dans le localstorage
     if (cart == null) {
         cart = [];
