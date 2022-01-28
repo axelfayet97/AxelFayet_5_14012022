@@ -1,9 +1,13 @@
 // Récupération de l'url
-var url = window.location.href;
-var productId = new URL(url).searchParams.get("id");
+
+function getId() {
+    var url = window.location.href;
+    var productId = new URL(url).searchParams.get("id");
+    return productId
+}
 
 // Création code page produits
-fetch(`http://localhost:3000/api/products/${productId}`)
+fetch(`http://localhost:3000/api/products/${getId()}`)
     .then(res => {
         // Récupération du résultat de la requête et conversion en objet json
         return res.json();
@@ -14,6 +18,25 @@ fetch(`http://localhost:3000/api/products/${productId}`)
     })
     .catch(err => {
         // Si une erreur survient
+        // Affichage d'une page d'erreur
+        const mainContent = document.querySelector("section article");
+        mainContent.innerHTML = "";
+        mainContent.classList.add('item__content__addButton');
+
+        // Texte erreur
+        const createH1 = document.createElement("h1");
+        createH1.innerHTML = "Désolé ! <br /> Le produit que vous recherchez n'existe pas !";
+
+        // CTA Retour à l'accueil
+        const createCTA = document.createElement("button");
+        createCTA.textContent = "Retour à l'accueil";
+        createCTA.addEventListener("click", () => {
+            window.location.href = "/P5-Dev-Web-Kanap/front/html/index.html";
+        })
+
+        mainContent.appendChild(createH1);
+        mainContent.appendChild(createCTA);
+
         console.log("Une erreur est survenue." + err);
     });
 
@@ -41,11 +64,11 @@ function displayProducts(product) {
     // Ajout des options dans la balise select
     const targetSelect = document.getElementById("colors");
     const colorsArray = product.colors;
-    for (let i = 0; i < colorsArray.length; i++) {
-        let color = document.createElement("option");
-        color.textContent = colorsArray[i];
-        color.value = colorsArray[i];
-        targetSelect.appendChild(color);
+    for (let color of colorsArray) {
+        const createOption = document.createElement("option");
+        createOption.value = color;
+        createOption.textContent = color;
+        targetSelect.appendChild(createOption)
     }
 
     // OPTIONNEL - Reparamétrage de la valeur du champs input
@@ -55,48 +78,55 @@ function displayProducts(product) {
     document.title = product.name;
 }
 
-
-// Ajout d'un article au panier (localstorage)
+// Ajout d'un article au localstorage
 // Au clic sur le bouton "Ajouter au panier"
-let buttonAdd = document.getElementById("addToCart");
+const buttonAdd = document.getElementById("addToCart");
 buttonAdd.addEventListener("click", () => {
-    let cart = JSON.parse(localStorage.getItem("product"));
     // On récupère les données dont on a besoin : prix, couleur & nombre d'article(s)
-    let color = document.getElementById("colors");
-    let price = document.getElementById("price").innerText;
-    let quantity = document.getElementById("quantity").value;
-
-    // Création de l'objet et attribution des valeurs à ajouter au localstorage
-    const productToCart = Object.assign({
-        id: `${productId}`,
-        color: `${color.value}`,
-        price: parseInt(price),
-        quantity: parseInt(quantity)
-    });
+    const color = document.getElementById("colors").value;
+    const quantity = parseInt(document.getElementById("quantity").value);
+    const id = getId();
+    const getLocalstorage = localStorage.getItem("product");
+    let cart = [];
 
     // Vérification des champs renseignés
-    // if (productToCart.quantity == 0) {
-    //     alert("Veuillez sélectionner une quantité supérieure à 1");
-    // } else if (productToCart.color == "") {
-    //     alert("Veuillez sélectionner une couleur.");
-    // } else {
+    if (quantity == 0) {
+        alert("Veuillez sélectionner une quantité supérieure à 1");
+        return
+    }
+    if (color == "") {
+        alert("Veuillez sélectionner une couleur.");
+        return
+    }
 
-
-    // Ajout des données du produit dans le localstorage
-    if (cart == null) {
-        cart = [];
-        cart.push(Object.values(productToCart));
-        localStorage.setItem("product", JSON.stringify(cart));
-    } else {
-        // Methode pour comparer les éléments de l'array cart 
-        if (1 == 1) {
-            for (let i of cart) {
-                console.log(cart);
-                productToCart.quantity++;
-                console.log(productToCart);
-                localStorage.setItem("product", JSON.stringify(cart))
+    // Ajout des données au localstorage
+    if (getLocalstorage) {
+        cart = JSON.parse(getLocalstorage);
+        let existProduct = false; $
+        // Si un produit est déjà dans le locastorage
+        for (const product of cart) {
+            if (product.id == id && product.color == color) {
+                product.quantity += quantity;
+                existProduct = true;
             }
         }
+        // Si un produit est déjà présent
+        if (!existProduct) {
+            cart.push({
+                id: id,
+                color: color,
+                quantity: quantity
+            })
+        }
+    } else {
+        //Si aucun produit n'est présent, alors on crée un objet dans l'array cart
+        cart = [{
+            id: id,
+            color: color,
+            quantity: quantity
+        }];
     }
-    // }
+
+    localStorage.setItem("product", JSON.stringify(cart))
+    alert("Votre objet à bien été ajouté au panier !")
 });
