@@ -12,13 +12,13 @@ fetch("http://localhost:3000/api/products/")
     })
     .catch(err => {
         // Si une erreur survient
-        console.log("Une erreur est survenue." + err);
+        console.log("Une erreur est survenue. " + err);
     });
 
 // Fonction générant les produits trouvés dans l'API
 function displayProducts(product) {
     // Demander si const justifié ?
-    
+
     // Création du lien dynamique 
     const createLink = document.createElement("a");
     createLink.setAttribute("href", `./product.html?id=${product._id}`);
