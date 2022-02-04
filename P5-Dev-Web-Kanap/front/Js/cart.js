@@ -118,8 +118,8 @@ function displayCart(product, element) {
 }
 
 function totalAmount(quantity, price) {
-    let total = document.getElementById("totalQuantity");
-    total.innerHTML = parseInt(total.innerHTML) + quantity;
+    let totalQuantity = document.getElementById("totalQuantity");
+    totalQuantity.innerHTML = parseInt(total.innerHTML) + quantity;
 
     let totalPrice = document.getElementById("totalPrice");
     totalPrice.innerHTML = parseInt(totalPrice.innerHTML) + price * quantity;
