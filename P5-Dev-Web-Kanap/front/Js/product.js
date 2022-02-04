@@ -37,7 +37,7 @@ fetch(`http://localhost:3000/api/products/${getId()}`)
         mainContent.appendChild(createH1);
         mainContent.appendChild(createCTA);
 
-        console.log("Une erreur est survenue." + err);
+        console.log("Une erreur est survenue. " + err);
     });
 
 // Fonction générant les produits trouvés dans l'API
@@ -102,7 +102,7 @@ buttonAdd.addEventListener("click", () => {
     // Ajout des données au localstorage
     if (getLocalstorage) {
         cart = JSON.parse(getLocalstorage);
-        let existProduct = false; $
+        let existProduct = false;
         // Si un produit est déjà dans le locastorage
         for (const product of cart) {
             if (product.id == id && product.color == color) {
