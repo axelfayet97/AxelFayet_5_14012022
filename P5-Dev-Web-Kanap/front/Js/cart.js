@@ -118,17 +118,19 @@ function displayCart(product, element) {
 }
 
 function totalAmount(quantity, price) {
+
     let totalQuantity = document.getElementById("totalQuantity");
-    totalQuantity.innerHTML = parseInt(total.innerHTML) + quantity;
+    totalQuantity.innerHTML = parseInt(totalQuantity.innerHTML) + quantity;
 
     let totalPrice = document.getElementById("totalPrice");
     totalPrice.innerHTML = parseInt(totalPrice.innerHTML) + price * quantity;
 }
 
+// Gestion de la modification du champs quantité
+// Ajouter qté en fonction de la modif valeur de l'input OK
 
 
-// Gestion de la quantité
-// Ajouter qté en fonction de la valeur de l'input
+
 // Addeventlistener sur input pour modification directe des champs articles & total
 // Modification du localstorage ?
 
