@@ -102,7 +102,7 @@ buttonAdd.addEventListener("click", () => {
     // Ajout des données au localstorage
     if (getLocalstorage) {
         cart = JSON.parse(getLocalstorage);
-        let existProduct = false; $
+        let existProduct = false;
         // Si un produit est déjà dans le locastorage
         for (const product of cart) {
             if (product.id == id && product.color == color) {
