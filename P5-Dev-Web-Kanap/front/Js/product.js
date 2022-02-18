@@ -127,6 +127,6 @@ buttonAdd.addEventListener("click", () => {
         }];
     }
 
-    localStorage.setItem("product", JSON.stringify(cart))
-    alert("Votre objet à bien été ajouté au panier !")
+    localStorage.setItem("product", JSON.stringify(cart));
+    alert("Votre objet à bien été ajouté au panier !");
 });
