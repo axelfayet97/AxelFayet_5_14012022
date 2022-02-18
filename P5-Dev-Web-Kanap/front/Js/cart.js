@@ -160,10 +160,15 @@ function totalAmount(quantity, price) {
 
 function getFormInformations() {
     // Récupération des champs données du client et utilisation de regex
+    // Regexp
+    let nameRegexp = new RegExp(/^\D+$/);
+    let addressRegexp = new RegExp(/^[0-9][\w ,.'-].+$/);
+    let mailRegexp = new RegExp(/^([a-z0-9.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/);
+
     // Prénom
     let firstNameInput = document.getElementById("firstName");
     firstNameInput.addEventListener("change", (e) => {
-        if (/^\D+$/.test(e.target.value)) {
+        if (nameRegexp.test(e.target.value)) {
             buttonIsDisabled(false);
         } else {
             alert("Veuillez vérifier le format du prénom.")
@@ -173,7 +178,7 @@ function getFormInformations() {
     // Nom
     let lastNameInput = document.getElementById("lastName");
     lastNameInput.addEventListener("change", (e) => {
-        if (/^\D+$/.test(e.target.value)) {
+        if (nameRegexp.test(e.target.value)) {
             buttonIsDisabled(false);
         } else {
             alert("Veuillez vérifier le format du nom.")
@@ -183,7 +188,7 @@ function getFormInformations() {
     // Adresse
     let addressInput = document.getElementById("address");
     addressInput.addEventListener("change", (e) => {
-        if (/^[0-9][\w ,.'-].+$/.test(e.target.value)) {
+        if (addressRegexp.test(e.target.value)) {
             buttonIsDisabled(false);
         } else {
             alert("Veuillez vérifier le format de l'adresse.")
@@ -193,7 +198,7 @@ function getFormInformations() {
     // Ville
     let cityInput = document.getElementById("city");
     cityInput.addEventListener("change", (e) => {
-        if (/^\D+$/.test(e.target.value)) {
+        if (nameRegexp.test(e.target.value)) {
             buttonIsDisabled(false);
         } else {
             alert("Veuillez vérifier le format de la ville.")
@@ -203,7 +208,7 @@ function getFormInformations() {
     // Email
     let emailInput = document.getElementById("email");
     emailInput.addEventListener("change", (e) => {
-        if (/^([a-z0-9.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(e.target.value)) {
+        if (mailRegexp.test(e.target.value)) {
             buttonIsDisabled(false);
         } else {
             alert("Veuillez vérifier le format de l'adresse e-mail.")
