@@ -157,3 +157,70 @@ function totalAmount(quantity, price) {
     let totalPrice = document.getElementById("totalPrice");
     totalPrice.innerHTML = parseInt(totalPrice.innerHTML) + price * quantity;
 };
+
+function getFormInformations() {
+    // Récupération des champs données du client et utilisation de regex
+    // Prénom
+    let firstNameInput = document.getElementById("firstName");
+    firstNameInput.addEventListener("change", (e) => {
+        if (/^\D+$/.test(e.target.value)) {
+            buttonIsDisabled(false);
+        } else {
+            alert("Veuillez vérifier le format du prénom.")
+            buttonIsDisabled(true);
+        }
+    });
+    // Nom
+    let lastNameInput = document.getElementById("lastName");
+    lastNameInput.addEventListener("change", (e) => {
+        if (/^\D+$/.test(e.target.value)) {
+            buttonIsDisabled(false);
+        } else {
+            alert("Veuillez vérifier le format du nom.")
+            buttonIsDisabled(true);
+        }
+    });
+    // Adresse
+    let addressInput = document.getElementById("address");
+    addressInput.addEventListener("change", (e) => {
+        if (/^[0-9][\w ,.'-].+$/.test(e.target.value)) {
+            buttonIsDisabled(false);
+        } else {
+            alert("Veuillez vérifier le format de l'adresse.")
+            buttonIsDisabled(true);
+        }
+    });
+    // Ville
+    let cityInput = document.getElementById("city");
+    cityInput.addEventListener("change", (e) => {
+        if (/^\D+$/.test(e.target.value)) {
+            buttonIsDisabled(false);
+        } else {
+            alert("Veuillez vérifier le format de la ville.")
+            buttonIsDisabled(true);
+        }
+    });
+    // Email
+    let emailInput = document.getElementById("email");
+    emailInput.addEventListener("change", (e) => {
+        if (/^([a-z0-9.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(e.target.value)) {
+            buttonIsDisabled(false);
+        } else {
+            alert("Veuillez vérifier le format de l'adresse e-mail.")
+            buttonIsDisabled(true);
+        }
+    });
+    // Bouton commander
+    let orderInput = document.getElementById("order");
+    function buttonIsDisabled(disabled) {
+        if (disabled) {
+            orderInput.setAttribute("disabled", true);
+            console.log("btn is disabled");
+        } else {
+            orderInput.removeAttribute("disabled");
+        }
+    }
+    orderInput.addEventListener("change", buttonIsDisabled());
+    // Génération d'un numéro de suivi
+}
+getFormInformations();
