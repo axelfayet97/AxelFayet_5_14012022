@@ -1,9 +1,7 @@
 // Récupération des produits dans le localstorage : image, nom, couleur, quantité
-
 let cart = JSON.parse(localStorage.getItem("product"));
-
 // Si localstorage vide : afficher message "Panier Vide"
-if (cart == null) {
+if (!cart || cart == 0 || cart == undefined) {
     const itemsSection = document.getElementById("cart__items");
     const createH2 = document.createElement("h2");
     createH2.textContent = "Votre panier est vide !";
@@ -16,7 +14,7 @@ if (cart == null) {
                 return res.json();
             })
             .then(product => {
-                //Promesse acceptée, récupération de ses produits
+                //Promesse acceptée, appel des fonction au chargement des produits
                 displayCart(product, element);
                 totalAmount(element.quantity, product.price);
             })
@@ -24,8 +22,8 @@ if (cart == null) {
                 // Si une erreur survient
                 console.log("Une erreur est survenue. " + err);
             });
-    }
-}
+    };
+};
 
 // Affichage récapitulatif produit : affichage des données produits
 function displayCart(product, element) {
@@ -97,8 +95,25 @@ function displayCart(product, element) {
     createQuantityInput.setAttribute("value", element.quantity);
     createQuantityInput.classList.add("itemQuantity");
     createDivQuantity.appendChild(createQuantityInput);
-
-
+    // Methode pour gestion quantité
+    createQuantityInput.addEventListener("change", (e) => {
+        // LocalStorage
+        let productStorage = JSON.parse(localStorage.getItem("product"));
+        // Balise article la plus proche
+        let closestArticle = e.target.closest("article");
+        // Récupération des attributs data-id & data-color
+        let productDataId = closestArticle.getAttribute("data-id");
+        let productDataColor = closestArticle.getAttribute("data-color");
+        // Boucle sur LocalStorage
+        for (const element in productStorage) {
+            if (productStorage[element].id == productDataId && productStorage[element].color == productDataColor) {
+                productStorage[element].quantity = parseInt(e.target.value);
+                // On remet les valeurs dans le localstorage
+                localStorage.setItem("product", JSON.stringify(productStorage));
+            };
+        };
+        location.reload();
+    });
 
     // Création et gestion de la div suppression
     const createDivDelete = document.createElement("div");
@@ -110,36 +125,35 @@ function displayCart(product, element) {
     createPDelete.classList.add("deleteItem");
     createPDelete.textContent = "Supprimer";
     createDivDelete.append(createPDelete);
-    createPDelete.addEventListener("click", () => {
-        console.log("clicked");
-        // localStorage.removeItem("product");
-        // Remove article with this data-id
+    // Methode pour supprimer un item
+    createPDelete.addEventListener("click", (e) => {
+        // LocalStorage
+        let productStorage = JSON.parse(localStorage.getItem("product"));
+        for (let element in productStorage) {
+            // Balise article la plus proche
+            let closestArticle = e.target.closest("article");
+            // Récupération des attributs data-id & data-color
+            let productDataId = closestArticle.getAttribute("data-id");
+            let productDataColor = closestArticle.getAttribute("data-color");
+            if (productStorage[element].color == productDataColor && productStorage[element].id == productDataId) {
+                productStorage.splice(productStorage.indexOf(productStorage[element]), productStorage.indexOf(productStorage[element]));
+                // Problème quand localstorage contient seulement 1 item, donc si index = 0 alors on utilise shift() qui supprime le 1er element de l'array
+                if (productStorage.indexOf(productStorage[element]) == 0) {
+                    productStorage.shift();
+                }
+            }
+            localStorage.setItem("product", JSON.stringify(productStorage));
+        };
+        location.reload();
     });
-}
+};
 
+// Gestion du Total
 function totalAmount(quantity, price) {
-
+    // Nombre d'articles
     let totalQuantity = document.getElementById("totalQuantity");
     totalQuantity.innerHTML = parseInt(totalQuantity.innerHTML) + quantity;
-
+    // Prix total
     let totalPrice = document.getElementById("totalPrice");
     totalPrice.innerHTML = parseInt(totalPrice.innerHTML) + price * quantity;
-}
-
-// Gestion de la modification du champs quantité
-// Ajouter qté en fonction de la modif valeur de l'input OK
-
-
-
-// Addeventlistener sur input pour modification directe des champs articles & total
-// Modification du localstorage ?
-
-// Fonction pour retirer l'objet du panier
-// rafraîchissement de la page à la suppression 0
-
-
-// Récupération des champs données du client
-// Utiliser Regex pour vérification des champs
-// if form ok => click commander => afficher page cofirmation
-
-// Génération d'un numéro de suivi
+};
