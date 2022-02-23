@@ -97,7 +97,7 @@ function displayCart(product, element) {
     createDivQuantity.appendChild(createQuantityInput);
     // Methode pour gestion quantité
     createQuantityInput.addEventListener("change", (e) => {
-        // LocalStorage
+        // Définition du localstorage
         let productStorage = JSON.parse(localStorage.getItem("product"));
         // Balise article la plus proche
         let closestArticle = e.target.closest("article");
@@ -127,7 +127,7 @@ function displayCart(product, element) {
     createDivDelete.append(createPDelete);
     // Methode pour supprimer un item
     createPDelete.addEventListener("click", (e) => {
-        // LocalStorage
+        // Définition du localStorage
         let productStorage = JSON.parse(localStorage.getItem("product"));
         for (let element in productStorage) {
             // Balise article la plus proche
@@ -135,16 +135,20 @@ function displayCart(product, element) {
             // Récupération des attributs data-id & data-color
             let productDataId = closestArticle.getAttribute("data-id");
             let productDataColor = closestArticle.getAttribute("data-color");
+            console.log("Data-Id " + productDataId, "Data-color " + productDataColor);
+            console.log("Product id " + productStorage[element].id, "Product Color " + productStorage[element].color);
             if (productStorage[element].color == productDataColor && productStorage[element].id == productDataId) {
+                console.log(`Retire l'élément ${productDataColor}`);
                 productStorage.splice(productStorage.indexOf(productStorage[element]), productStorage.indexOf(productStorage[element]));
                 // Problème quand localstorage contient seulement 1 item, donc si index = 0 alors on utilise shift() qui supprime le 1er element de l'array
                 if (productStorage.indexOf(productStorage[element]) == 0) {
                     productStorage.shift();
+                    console.log("Shift premier item de l'array");
                 }
             }
-            localStorage.setItem("product", JSON.stringify(productStorage));
+            // localStorage.setItem("product", JSON.stringify(productStorage));
         };
-        location.reload();
+        // location.reload();
     });
 };
 
@@ -169,9 +173,11 @@ function getFormInformations() {
     let firstNameInput = document.getElementById("firstName");
     firstNameInput.addEventListener("change", (e) => {
         if (nameRegexp.test(e.target.value)) {
+            document.getElementById("firstNameErrorMsg").innerText = "";
             buttonIsDisabled(false);
+            console.log(firstNameInput.value);
         } else {
-            alert("Veuillez vérifier le format du prénom.")
+            document.getElementById("firstNameErrorMsg").innerText = "Veuillez vérifier le format du prénom.";
             buttonIsDisabled(true);
         }
     });
@@ -179,9 +185,10 @@ function getFormInformations() {
     let lastNameInput = document.getElementById("lastName");
     lastNameInput.addEventListener("change", (e) => {
         if (nameRegexp.test(e.target.value)) {
+            document.getElementById("lastNameErrorMsg").innerText = "";
             buttonIsDisabled(false);
         } else {
-            alert("Veuillez vérifier le format du nom.")
+            document.getElementById("lastNameErrorMsg").innerText = "Veuillez vérifier le format du nom.";
             buttonIsDisabled(true);
         }
     });
@@ -189,9 +196,10 @@ function getFormInformations() {
     let addressInput = document.getElementById("address");
     addressInput.addEventListener("change", (e) => {
         if (addressRegexp.test(e.target.value)) {
+            document.getElementById("addressErrorMsg").innerText = "";
             buttonIsDisabled(false);
         } else {
-            alert("Veuillez vérifier le format de l'adresse.")
+            document.getElementById("addressErrorMsg").innerText = "Veuillez vérifier le format de l'adresse.";
             buttonIsDisabled(true);
         }
     });
@@ -199,9 +207,10 @@ function getFormInformations() {
     let cityInput = document.getElementById("city");
     cityInput.addEventListener("change", (e) => {
         if (nameRegexp.test(e.target.value)) {
+            document.getElementById("cityErrorMsg").innerText = "";
             buttonIsDisabled(false);
         } else {
-            alert("Veuillez vérifier le format de la ville.")
+            document.getElementById("cityErrorMsg").innerText = "Veuillez vérifier le format de la ville.";
             buttonIsDisabled(true);
         }
     });
@@ -209,9 +218,10 @@ function getFormInformations() {
     let emailInput = document.getElementById("email");
     emailInput.addEventListener("change", (e) => {
         if (mailRegexp.test(e.target.value)) {
+            document.getElementById("emailErrorMsg").innerText = "";
             buttonIsDisabled(false);
         } else {
-            alert("Veuillez vérifier le format de l'adresse e-mail.")
+            document.getElementById("emailErrorMsg").innerText = "Veuillez vérifier le format de l'adresse e-mail.";
             buttonIsDisabled(true);
         }
     });
@@ -226,6 +236,8 @@ function getFormInformations() {
         }
     }
     orderInput.addEventListener("change", buttonIsDisabled());
+
+    // Stockage des données utilisateur
     // Génération d'un numéro de suivi
 }
 getFormInformations();
