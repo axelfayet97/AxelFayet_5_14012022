@@ -175,7 +175,6 @@ function getFormInformations() {
         if (nameRegexp.test(e.target.value)) {
             document.getElementById("firstNameErrorMsg").innerText = "";
             buttonIsDisabled(false);
-            console.log(firstNameInput.value);
         } else {
             document.getElementById("firstNameErrorMsg").innerText = "Veuillez vérifier le format du prénom.";
             buttonIsDisabled(true);
@@ -238,6 +237,67 @@ function getFormInformations() {
     orderInput.addEventListener("change", buttonIsDisabled());
 
     // Stockage des données utilisateur
+    // let contact = {
+    //     cartContent: JSON.stringify(localStorage.getItem("product")),
+    //     firstName: JSON.stringify(firstNameInput.value),
+    //     lastName: lastNameInput.value,
+    //     address: addressInput.value,
+    //     city: cityInput.value,
+    //     email: emailInput.value,
+    // };
     // Génération d'un numéro de suivi
+
+    // .then(res => {
+    //     // Récupération du résultat de la requête et conversion en objet json
+    //     return res.json();
+    // })
+    // .then(
+
+    // })
+    // .catch(err => {
+    //     // Si une erreur survient
+    //     console.log("Une erreur est survenue. " + err);
+    // });
 }
 getFormInformations();
+
+function sendFormInformations(e) {
+    e.preventDefault();
+    // Déclaration des variables nécéssaires au traitement de la requete post
+    let firstNameInput = document.getElementById("firstName");
+    let lastNameInput = document.getElementById("lastName");
+    let addressInput = document.getElementById("address");
+    let cityInput = document.getElementById("city");
+    let emailInput = document.getElementById("email");
+
+    // Stockage des valeurs + cart dans un objet
+    for (const article in cart) {
+        let articleId = cart[article].id;
+        console.log(articleId);
+        return articleId
+    }
+    let contact = {
+        cartId: articleId,
+        firstName: JSON.stringify(firstNameInput.value),
+        lastName: lastNameInput.value,
+        address: addressInput.value,
+        city: cityInput.value,
+        email: emailInput.value,
+    };
+    console.log(contact);
+    fetch(`http://localhost:3000/api/products/order`, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(contact),
+    }).then(res => {
+        // Récupération du résultat de la requête et conversion en objet json
+        return res.json();
+    })
+        .catch(err => {
+            // Si une erreur survient
+            console.log("Une erreur est survenue. " + err);
+        });
+} document.querySelector("form").addEventListener("submit", sendFormInformations)
