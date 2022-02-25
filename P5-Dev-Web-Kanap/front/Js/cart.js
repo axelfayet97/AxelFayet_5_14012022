@@ -115,7 +115,12 @@ function displayCart(product, element) {
             if (productsStorage[index].id == productDataId && productsStorage[index].color == productDataColor) {
                 // Alors on définit la quantité sur la quantité saisie dans l'input
                 productsStorage[index].quantity = parseInt(e.target.value);
-                // On actualite ensuite les valeurs dans le localstorage
+                // Si la quantité est égale à 0 alors on retire l'article du panier
+                if (productsStorage[index].quantity == 0) {
+                    // On retire cet élément du tableau
+                    productsStorage.splice(productsStorage.indexOf(element), 1);
+                }
+                // On actualise ensuite les valeurs dans le localstorage
                 localStorage.setItem("products", JSON.stringify(productsStorage));
             };
         };
@@ -268,7 +273,6 @@ function sendFormInformations() {
     let products = [];
     for (const index in cart) {
         products.push(cart[index].id);
-        products;
     };
 
     // On regroupe les informations de contact et le tableau contenant les ID dans data
@@ -282,6 +286,7 @@ function sendFormInformations() {
             "Accept": "application/json",
             "Content-Type": "application/json",
         },
+        // Corps de la requête
         body: JSON.stringify(data)
     })
         .then(res => {
@@ -299,7 +304,14 @@ function sendFormInformations() {
 
 // Á l'envoi du formulaire on déclenche la fonction permettant d'envoyer les informations à l'API
 document.querySelector("form").addEventListener("submit", (e) => {
+    // Prévention du comportement par défaut du bouton
     e.preventDefault();
-    sendFormInformations();
-    localStorage.removeItem("products");
+    // On vérifie si le panier n'es pas vide ou si la quantité est différente de 0
+    if (!cart || cart == 0 || cart == undefined) {
+        alert("Votre panier est vide, veuillez sélectionner un article.");
+        return
+    } else {
+        sendFormInformations();
+        // localStorage.removeItem("products");    =========> à utiliser ? Si oui sur ce script ou après la requête de la page confirmation ?
+    };
 });
