@@ -1,11 +1,11 @@
-// Création d'une requête API pour demander l'ensemble des produits.
+// Création d'une requête pour demander à l'API l'ensemble des produits du catalogue
 fetch("http://localhost:3000/api/products/")
     .then(res => {
-        // Récupération du résultat de la requête et conversion en objet json
+        // Récupération d'une promesse et conversion en objet json
         return res.json();
     })
     .then(product => {
-        //Promesse acceptée, récupération de ses produits
+        //Promesse acceptée, récupération des produits
         for (var kanap of product) {
             displayProducts(kanap);
         };
@@ -17,8 +17,6 @@ fetch("http://localhost:3000/api/products/")
 
 // Fonction générant les produits trouvés dans l'API
 function displayProducts(product) {
-    // Demander si const justifié ?
-
     // Création du lien dynamique 
     const createLink = document.createElement("a");
     createLink.setAttribute("href", `./product.html?id=${product._id}`);
@@ -54,4 +52,4 @@ function displayProducts(product) {
 
     // Assigner la balise <a> au conteneur
     itemContainer.appendChild(createLink);
-}
+};
