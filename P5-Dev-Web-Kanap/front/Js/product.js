@@ -74,7 +74,7 @@ function displayProducts(product) {
 
     // OPTIONNEL - Changement nom titre de la page
     document.title = product.name;
-}
+};
 
 // Ajout d'un article au localstorage au clic sur le bouton "Ajouter au panier"
 const buttonAdd = document.getElementById("addToCart");
