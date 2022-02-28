@@ -296,7 +296,7 @@ function sendFormInformations() {
         .then(orderId => {
             // Résolution de la promesse par un ID de commande puis redirection de l'utilisateur vers la page confirmation
             JSON.stringify(orderId);
-            window.open(`./confirmation.html?order=${orderId.orderId}`);
+            window.location = `./confirmation.html?order=${orderId.orderId}`;
         })
         .catch(err => {
             // Si une erreur survient
