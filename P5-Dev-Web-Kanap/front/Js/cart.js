@@ -290,11 +290,13 @@ function sendFormInformations() {
         body: JSON.stringify(data)
     })
         .then(res => {
+            // Récupération de la promesse
             return res.json();
         })
-        .then(redirection => {
-            // A la résolution de la promesse, on redirige l'utilisateur vers une page de confirmation
-            window.location = "/P5-Dev-Web-Kanap/front/html/confirmation.html";
+        .then(orderId => {
+            // Résolution de la promesse par un ID de commande puis redirection de l'utilisateur vers la page confirmation
+            JSON.stringify(orderId);
+            window.open(`./confirmation.html?order=${orderId.orderId}`);
         })
         .catch(err => {
             // Si une erreur survient
