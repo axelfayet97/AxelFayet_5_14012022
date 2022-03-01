@@ -116,7 +116,7 @@ function displayCart(product, element) {
                 // Alors on définit la quantité sur la quantité saisie dans l'input
                 productsStorage[index].quantity = parseInt(e.target.value);
                 // Si la quantité est égale à 0 alors on retire l'article du panier
-                if (productsStorage[index].quantity == 0) {
+                if (productsStorage[index].quantity <= 0) {
                     // On retire cet élément du tableau
                     productsStorage.splice(productsStorage.indexOf(element), 1);
                 }
