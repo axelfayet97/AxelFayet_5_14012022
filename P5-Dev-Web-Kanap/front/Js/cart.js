@@ -239,7 +239,7 @@ function checkFormInformations() {
             buttonIsDisabled(true);
         };
     });
-}
+};
 
 // Fonction permettant de désactiver le bouton "Commander" si un champs est incorrect
 function buttonIsDisabled(disabled) {
@@ -302,7 +302,7 @@ function sendFormInformations() {
             // Si une erreur survient
             console.log("Une erreur est survenue. " + err);
         });
-}
+};
 
 // Á l'envoi du formulaire on déclenche la fonction permettant d'envoyer les informations à l'API
 document.querySelector("form").addEventListener("submit", (e) => {

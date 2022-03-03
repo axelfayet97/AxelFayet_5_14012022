@@ -3,7 +3,7 @@ function getId() {
     var url = window.location.href;
     var productsId = new URL(url).searchParams.get("id");
     return productsId
-}
+};
 
 // Création du lien fetch de la page produit
 fetch(`http://localhost:3000/api/products/${getId()}`)
