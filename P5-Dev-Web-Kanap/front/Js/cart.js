@@ -213,7 +213,7 @@ function checkFormInformations() {
             document.getElementById("addressErrorMsg").innerText = "";
             buttonIsDisabled(false);
         } else {
-            document.getElementById("addressErrorMsg").innerText = "Veuillez vérifier le format de l'adresse : les caractères spéciaux ne sont pas acceptés.";
+            document.getElementById("addressErrorMsg").innerText = "Format incorrect, veuillez saisir le nom de votre ville : les caractères spéciaux ne sont pas acceptés.";
             buttonIsDisabled(true);
         };
     });
@@ -224,7 +224,7 @@ function checkFormInformations() {
             document.getElementById("cityErrorMsg").innerText = "";
             buttonIsDisabled(false);
         } else {
-            document.getElementById("cityErrorMsg").innerText = "Veuillez vérifier le format de la ville : les caractères spéciaux ne sont pas acceptés.";
+            document.getElementById("cityErrorMsg").innerText = "Veuillez vérifier le format de la ville : les chiffres et les caractères spéciaux ne sont pas acceptés.";
             buttonIsDisabled(true);
         };
     });
@@ -293,10 +293,10 @@ function sendFormInformations() {
             // Récupération de la promesse
             return res.json();
         })
-        .then(orderId => {
+        .then(promise => {
             // Résolution de la promesse par un ID de commande puis redirection de l'utilisateur vers la page confirmation
-            JSON.stringify(orderId);
-            window.location = `./confirmation.html?order=${orderId.orderId}`;
+            JSON.stringify(promise);
+            window.location = `./confirmation.html?order=${promise.orderId}`;
         })
         .catch(err => {
             // Si une erreur survient
@@ -314,6 +314,5 @@ document.querySelector("form").addEventListener("submit", (e) => {
         return
     } else {
         sendFormInformations();
-        // localStorage.removeItem("products");    =========> à utiliser ? Si oui sur ce script ou après la requête de la page confirmation ?
     };
 });
